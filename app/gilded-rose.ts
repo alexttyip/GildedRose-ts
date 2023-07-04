@@ -55,7 +55,6 @@ export class GildedRose {
                 continue;
             }
 
-
             if (this.items[i].name == 'Conjured Mana Cake' && this.items[i].sellIn >= 0) {
                 this.decreaseQuality(this.items[i], 2)
                 continue;
@@ -69,7 +68,6 @@ export class GildedRose {
             } else {
                 this.decreaseQuality(this.items[i], 2)
             }
-
 
         }
 
