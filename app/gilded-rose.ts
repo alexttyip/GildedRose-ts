@@ -36,11 +36,11 @@ export class GildedRose {
     }
 
     if (item.name != 'Aged Brie' && item.name != 'Backstage passes to a TAFKAL80ETC concert') {
-      // Decrease quality
+      // Decrease quality for normal items
       item.quality = GildedRose.decrease(item.quality)
     }
     else {
-      // Increase quality
+      // Increase quality for Brie and Concert ticket
       item.quality = GildedRose.increase(item.quality)
 
       // Concert ticket, more increases
@@ -68,7 +68,7 @@ export class GildedRose {
         item.quality = 0
       }
       else {
-        // Decrease quality
+        // Decrease quality for normal items
         item.quality = GildedRose.decrease(item.quality)
       }
     }
@@ -77,6 +77,7 @@ export class GildedRose {
   }
 
   updateQuality() {
+    // Update quality for each item individually
     this.items.map(GildedRose.updateOneQuality)
     return this.items;
   }
