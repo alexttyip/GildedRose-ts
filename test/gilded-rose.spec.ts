@@ -21,7 +21,7 @@ describe('Gilded Rose', () => {
 
     it('Given 2 items, item1 passed sellIn and item2 not passed sellIn, when updateQuality is called, then quality drop for item1 must be twice quality drop for item2.', () => {
       // Given
-      const testEnv = new GildedRose([new Item('item1', 0, 5), new Item('item2', 4, 5)]);
+      const testEnv = new GildedRose([new Item('item1', -1, 5), new Item('item2', 4, 5)]);
 
       // When
       const items = testEnv.updateQuality();
