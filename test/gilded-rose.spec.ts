@@ -63,7 +63,7 @@ describe('Gilded Rose', () => {
     expect(items[0].quality).toBe(0);
   });
 
-  it('Given an item with a quality value <0, when a day passes, its quality should be set to 0', () => {
+  it('Given an item with a quality value <0, when a day passes, its quality not change', () => {
     // Given
     const gildedRose = new GildedRose([new Item('test', 5, -10)]);
 
@@ -71,18 +71,7 @@ describe('Gilded Rose', () => {
     const items = gildedRose.updateQuality();
 
     // Then
-    expect(items[0].quality).toBe(0);
-  });
-
-  it('Given an item with a quality value >50, when a day passes, its quality should be set to 50', () => {
-    // Given
-    const gildedRose = new GildedRose([new Item('test', 5, 80)]);
-
-    // When
-    const items = gildedRose.updateQuality();
-
-    // Then
-    expect(items[0].quality).toBe(50);
+    expect(items[0].quality).toBe(-10);
   });
 
   describe('Aged Brie', () => {
@@ -128,6 +117,17 @@ describe('Gilded Rose', () => {
 
       // Then
       expect(items[0].quality).toBe(50);
+    });
+
+    it('Given an Aged Brie item with a quality >50, when a day passes, its quality should not change', () => {
+      // Given
+      const gildedRose = new GildedRose([new Item('Aged Brie', 1, 80)]);
+
+      // When
+      const items = gildedRose.updateQuality();
+
+      // Then
+      expect(items[0].quality).toBe(80);
     });
   });
 
