@@ -129,5 +129,19 @@ describe('Gilded Rose', () => {
       // Then
       expect(items[0].quality).toBe(50);
     });
+
+    describe('Sulfuras', () =>{
+      it('Given a Sulfuras item, when a day passes, its quality and sellIn values should be the same', () => {
+        // Given
+        const gildedRose = new GildedRose([new Item('Sulfuras, Hand of Ragnaros', 5, 10)]);
+
+        // When
+        const items = gildedRose.updateQuality();
+
+        // Then
+        expect(items[0].quality).toBe(10);
+        expect(items[0].sellIn).toBe(5);
+      });
+    });
   });
 });
