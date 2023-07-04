@@ -21,9 +21,6 @@ export class GildedRose {
 
   // Can Change this
 
-  calculateQualityChange() {
-
-  }
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
       // All items reduce by one sell by date apart from Sulfuras
