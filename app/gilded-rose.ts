@@ -26,7 +26,7 @@ export class GildedRose {
     }
 
     dealWithAgedBrie(agedBrie) {
-        if (agedBrie.sellIn > 0) {
+        if (agedBrie.sellIn >= 0) {
             this.increaseQuality(agedBrie)
         } else {
             this.increaseQuality(agedBrie, 2)
