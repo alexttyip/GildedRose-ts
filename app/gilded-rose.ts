@@ -25,7 +25,6 @@ export class GildedRose {
         this.items[i].quality += this.getItemQualityChange(this.items[i]);
       }
     }
-
     return this.items;
   }
 
@@ -33,24 +32,22 @@ export class GildedRose {
     if(item.name === "Aged Brie") return this.getAgedBrieQualityChange(item);
     if(item.name.includes("Backstage passes",0)) return this.getPassesQualityChange(item);
 
-    if(item.quality <= 0) return 0;
     if(item.sellIn < 0 && item.quality > 1) return -2;
-    return -1;
+    if(item.quality > 0) return -1;
+    return 0;
   }
 
   getAgedBrieQualityChange(item:Item){
-    if(item.quality >= 50) return 0;
     if(item.sellIn < 0 && item.quality < 49) return 2;
-    return 1;
+    if(item.quality < 50) return 1;
+    return 0;
   }
 
   getPassesQualityChange(item:Item){
     if(item.sellIn < 0) return -item.quality;
-    if(item.quality >= 50) return 0;
-    if(item.sellIn <= 10) {
-      if(item.sellIn <= 5 && item.quality < 48) return 3;
-      if(item.quality < 49) return 2;
-    }
-    return 1;
+    if(item.sellIn <= 5 && item.quality < 48) return 3;
+    if(item.sellIn <= 10 && item.quality < 49) return 2;
+    if(item.quality < 50) return 1;
+    return 0;
   }
 }
