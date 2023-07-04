@@ -17,26 +17,35 @@ export class GildedRose {
     this.items = items;
   }
 
-  static decrease(v) : number {
+  static decrease(v : number, val : number = 1) : number {
     // cannot decrease to lower than 0
-    return Math.max(v - 1, 0)
+    return Math.max(v - val, 0)
   }
 
-  static increase(v) : number {
+  static increase(v : number, val : number = 1) : number {
     // cannot decrease to higher than 50
-    return Math.min(v + 1, 50)
+    return Math.min(v + val, 50)
+  }
+
+  static ageBackstagePass(item : Item) : Item {
+    // Ages a backstage pass
+    if (item.sellIn > 10) {
+      item.quality = GildedRose.increase(item.quality)
+    }
+    else if (item.sellIn <= 10 && item.sellIn > 5) {
+      item.quality = GildedRose.increase(item.quality, 2)
+    }
+    else if (item.sellIn <= 5) {
+      item.quality = GildedRose.increase(item.quality, 3)
+    }
+
+    return item
   }
 
   static itemAging(item : Item) : Item {
     if (item.name === 'Backstage passes to a TAFKAL80ETC concert') {
       // Handles increase in value for concert tickets
-      item.quality = GildedRose.increase(item.quality)
-      if (item.sellIn < 11) {
-        item.quality = GildedRose.increase(item.quality)
-      }
-      if (item.sellIn < 6) {
-        item.quality = GildedRose.increase(item.quality)
-      }
+      item = GildedRose.ageBackstagePass(item)
     }
     else if (item.name === 'Aged Brie') {
       // Handles increase in value for aged brie
