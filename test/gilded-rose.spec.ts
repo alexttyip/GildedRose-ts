@@ -36,7 +36,7 @@ describe('Gilded Rose', () => {
   });
 
   it('Given an item is being sold, when it is named "Sulfuras, Hand of Ragnaros", quality and sell by date should not decrease',() =>{
-    const gildedRose = new GildedRose([new Item('Sulfuras, Hand of Ragnaros',2,50)]);
+    const gildedRose = new GildedRose([new Item('Sulfuras, Foot of Ragnaros',2,50)]);
     const items = gildedRose.updateQuality();
 
     expect(items[0].quality).toBe(50);
@@ -51,7 +51,7 @@ describe('Gilded Rose', () => {
   })
 
   it('Given backstage passes are being sold, when the sell by date is within 10 days, quality should increase by 2 per day',()=>{
-    const gildedRose = new GildedRose([new Item('Backstage passes to a TAFKAL80ETC concert',8,10),new Item('Backstage passes to a TAFKAL80ETC concert',10,10)]);
+    const gildedRose = new GildedRose([new Item('backstage passes to a rubbish concert',8,10),new Item('Backstage passes to a TAFKAL80ETC concert',10,10)]);
     const items = gildedRose.updateQuality();
 
     expect(items[0].quality).toBe(12);
@@ -59,7 +59,7 @@ describe('Gilded Rose', () => {
   });
 
   it('Given backstage passes are being sold, when the sell by date is within 5 days, quality should increase by 3 per day',()=>{
-    const gildedRose = new GildedRose([new Item('Backstage passes to a TAFKAL80ETC concert',3,10),new Item('Backstage passes to a TAFKAL80ETC concert',5,10)]);
+    const gildedRose = new GildedRose([new Item('backstage passes to a rubbish concert',3,10),new Item('Backstage passes to a TAFKAL80ETC concert',5,10)]);
     const items = gildedRose.updateQuality();
 
     expect(items[0].quality).toBe(13);
@@ -67,7 +67,7 @@ describe('Gilded Rose', () => {
   });
 
   it('Given backstage passes are being sold, when the concert has already happened, quality should drop to 0',()=>{
-    const gildedRose = new GildedRose([new Item('Backstage passes to a TAFKAL80ETC concert',0,10),new Item('Backstage passes to a TAFKAL80ETC concert',-1,10)]);
+    const gildedRose = new GildedRose([new Item('backstage passes to a rubbish concert',0,10),new Item('Backstage passes to a TAFKAL80ETC concert',-1,10)]);
     const items = gildedRose.updateQuality();
 
     expect(items[0].quality).toBe(0);
@@ -75,7 +75,7 @@ describe('Gilded Rose', () => {
   })
 
   it('Given an item is being sold, if it is conjured, the quality should decrease twice as fast as other items',()=>{
-    const gildedRose = new GildedRose([new Item('Conjured Mana Cake',3,10)]);
+    const gildedRose = new GildedRose([new Item('Conjured Tomatoes',3,10)]);
     const items = gildedRose.updateQuality();
 
     expect(items[0].quality).toBe(8);
