@@ -41,7 +41,9 @@ export class GildedRose {
                     this.decreaseQuality(this.items[i])
                 }
             }
+
             this.items[i].sellIn -= 1;
+
             if (this.items[i].sellIn < 0) {
                 if (this.items[i].name == 'Aged Brie') {
                     this.increaseQuality(this.items[i])
