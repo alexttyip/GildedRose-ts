@@ -143,6 +143,17 @@ describe('Gilded Rose', () => {
       expect(items[0].quality).toBe(10);
       expect(items[0].sellIn).toBe(5);
     });
+
+    it('Given a Sulfuras item with a quality more than 80, when a day passes, its quality should still be 80', () => {
+      // Given
+      const gildedRose = new GildedRose([new Item('Sulfuras, Hand of Ragnaros', 5, 80)]);
+
+      // When
+      const items = gildedRose.updateQuality();
+
+      // Then
+      expect(items[0].quality).toBe(80);
+    });
   });
 
   describe('Backstage passes', () => {
@@ -236,4 +247,8 @@ describe('Gilded Rose', () => {
       expect(items[0].quality).toBe(0);
     });
   });
+
+  describe('Conjured items', ()=>{
+
+  })
 });
