@@ -27,6 +27,56 @@ export class GildedRose {
     return Math.min(v + 1, 50)
   }
 
+  static itemAging(item : Item) : Item {
+    if (item.name === 'Backstage passes to a TAFKAL80ETC concert') {
+      // Handles increase in value for concert tickets
+      item.quality = GildedRose.increase(item.quality)
+      if (item.sellIn < 11) {
+        item.quality = GildedRose.increase(item.quality)
+      }
+      if (item.sellIn < 6) {
+        item.quality = GildedRose.increase(item.quality)
+      }
+    }
+    else if (item.name === 'Aged Brie') {
+      // Handles increase in value for aged brie
+      item.quality = GildedRose.increase(item.quality)
+    }
+    else {
+      // Decrease quality for other items
+      item.quality = GildedRose.decrease(item.quality)
+
+      if(item.name == 'Conjured Mana Cake') {
+        // Decrease again for Mana cake
+        item.quality = GildedRose.decrease(item.quality)
+      }
+    }
+
+    return item
+  }
+
+  static overdueHandling(item : Item) : Item {
+    // Overdue handling
+    if (item.name == 'Aged Brie') {
+      // Aged Brie increases quality
+      item.quality = GildedRose.increase(item.quality)
+    }
+    else if (item.name == 'Backstage passes to a TAFKAL80ETC concert') {
+      // Concert ticket has quality decreased to 0
+      item.quality = 0
+    }
+    else {
+      // Decrease quality for normal items
+      item.quality = GildedRose.decrease(item.quality)
+      if(item.name === 'Conjured Mana Cake') {
+        // Decrease again for Mana cake
+        item.quality = GildedRose.decrease(item.quality)
+      }
+    }
+
+    return item
+  }
+
   static updateOneQuality(item : Item) : Item {
     // Updates one item
 
@@ -35,53 +85,16 @@ export class GildedRose {
       return item
     }
 
-    if (item.name != 'Aged Brie' && item.name != 'Backstage passes to a TAFKAL80ETC concert') {
-      // Decrease quality for normal items
-      item.quality = GildedRose.decrease(item.quality)
-
-      if(item.name == 'Conjured Mana Cake') {
-        // Decrease again for Mana cake
-        item.quality = GildedRose.decrease(item.quality)
-      }
-    }
-    else {
-      // Increase quality for Brie and Concert ticket
-      item.quality = GildedRose.increase(item.quality)
-
-      if (item.name === 'Backstage passes to a TAFKAL80ETC concert') {
-        // Concert ticket, more increases
-        if (item.sellIn < 11) {
-          item.quality = GildedRose.increase(item.quality)
-        }
-        if (item.sellIn < 6) {
-          item.quality = GildedRose.increase(item.quality)
-        }
-      }
-    }
+    // Item ages, needs handling
+    item = GildedRose.itemAging(item)
 
     // Decrease sell by date
     item.sellIn--
 
     if (item.sellIn < 0) {
-      // Overdue handling
-      if (item.name == 'Aged Brie') {
-        // Aged Brie increases quality
-        item.quality = GildedRose.increase(item.quality)
-      }
-      else if (item.name == 'Backstage passes to a TAFKAL80ETC concert') {
-        // Concert ticket has quality decreased to 0
-        item.quality = 0
-      }
-      else {
-        // Decrease quality for normal items
-        item.quality = GildedRose.decrease(item.quality)
-        if(item.name === 'Conjured Mana Cake') {
-          // Decrease again for Mana cake
-          item.quality = GildedRose.decrease(item.quality)
-        }
-      }
+      // Item is overdue, more handling needed
+      item = GildedRose.overdueHandling(item)
     }
-
     return item
   }
 
