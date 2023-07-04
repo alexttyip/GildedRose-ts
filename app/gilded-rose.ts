@@ -38,13 +38,18 @@ export class GildedRose {
     if (item.name != 'Aged Brie' && item.name != 'Backstage passes to a TAFKAL80ETC concert') {
       // Decrease quality for normal items
       item.quality = GildedRose.decrease(item.quality)
+
+      if(item.name == 'Conjured Mana Cake') {
+        // Decrease again for Mana cake
+        item.quality = GildedRose.decrease(item.quality)
+      }
     }
     else {
       // Increase quality for Brie and Concert ticket
       item.quality = GildedRose.increase(item.quality)
 
       // Concert ticket, more increases
-      if (item.name == 'Backstage passes to a TAFKAL80ETC concert') {
+      if (item.name === 'Backstage passes to a TAFKAL80ETC concert') {
         if (item.sellIn < 11) {
           item.quality = GildedRose.increase(item.quality)
         }
@@ -70,6 +75,10 @@ export class GildedRose {
       else {
         // Decrease quality for normal items
         item.quality = GildedRose.decrease(item.quality)
+        if(item.name === 'Conjured Mana Cake') {
+          // Decrease again for Mana cake
+          item.quality = GildedRose.decrease(item.quality)
+        }
       }
     }
 
