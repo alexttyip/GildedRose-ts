@@ -60,8 +60,6 @@ export class GildedRose {
     item.sellIn--;
   }
 
-
-
   updateItem(item) {
     if(item.sellIn <= 0) {
       this.decreaseByMax(item, 2);

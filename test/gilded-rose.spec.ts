@@ -93,6 +93,13 @@ describe('Quality for backstage passes -- 0 days', () => {
   });
 });
 
+describe('Quality for backstage passes -- > 10 days', () => {
+  it('should decrease to 0', () => {
+    const gildedRose = new GildedRose([new Item('Backstage passes to a TAFKAL80ETC concert', 20, 20)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).toBe(21);
+  });
+});
 
 
 describe('Conjured item', () => {
@@ -104,4 +111,8 @@ describe('Conjured item', () => {
     expect(conjuredDecrease).toBe(2*barDecrease);
   });
 });
+
+
+
+
 
