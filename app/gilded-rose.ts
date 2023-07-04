@@ -19,77 +19,67 @@ export class GildedRose {
 
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
-      let qualityChange = 0;
       if(!this.items[i].name.includes("Sulfuras",0)){
         this.items[i].sellIn -= 1;
-        this.items[i].quality += this.getItemQualityChange(this.items[i]);
+        this.applyQualityChange(this.items[i], this.getItemQualityChange(this.items[i]));
       }
     }
     return this.items;
   }
 
   getItemQualityChange(item:Item){
-    if(item.name === "Aged Brie") {
-      return this.getAgedBrieQualityChange(item);
+    let change = this.getQualityChange(item);
+    if(item.name.includes("Backstage passes")) {
+      change = this.getPassesQualityChange(item);
     }
-    if(item.name.includes("Backstage passes",0)) {
-      return this.getPassesQualityChange(item);
+    else if(item.name.includes("Aged Brie")){
+      change = -change;
     }
-    if(item.name.includes("Conjured",0)) {
-      return this.getConjuredQualityChange(item);
+
+    if(item.name.includes("Conjured")) {
+      change = 2*change;
     }
-    return this.getGenericQualityChange(item);
+    return change;
   }
 
-  getGenericQualityChange(item:Item){
-    if(item.sellIn < 0 && item.quality > 1) {
-      return -2;
-    }
-    if(item.quality > 0) {
-      return -1;
-    }
-    return 0;
-  }
-
-  getConjuredQualityChange(item:Item){
+  getQualityChange(item:Item){
     if(item.sellIn < 0) {
-      if(item.quality > 3){
-        return -4;
-      }
-      if(item.quality > 2){
-        return -3;
-      }
-    }
-    if(item.quality > 1){
       return -2;
     }
-    if(item.quality > 0){
-      return -1;
-    }
-    return 0;
-  }
-
-  getAgedBrieQualityChange(item:Item){
-    if(item.sellIn < 0 && item.quality < 49) {
-      return 2;
-    }
-    if(item.quality < 50) {
-      return 1;
-    }
-    return 0;
+    return -1;
   }
 
   getPassesQualityChange(item:Item){
     if(item.sellIn < 0) return -item.quality;
-    if(item.sellIn <= 5 && item.quality < 48) {
+    if(item.sellIn <= 5) {
       return 3;
     }
-    if(item.sellIn <= 10 && item.quality < 49) {
+    if(item.sellIn <= 10) {
       return 2;
     }
-    if(item.quality < 50) {
-      return 1;
+    return 1;
+  }
+
+  applyQualityChange(item:Item, change:number) {
+    let newQuality = item.quality + change;
+    if(change < 0){
+      if(item.quality <= 0){
+        return;
+      }
+      if(newQuality <= 0) {
+        item.quality = 0;
+        return;
+      }
     }
-    return 0;
+    else if(change > 0){
+      if(item.quality >= 50){
+        return;
+      }
+      if(newQuality >= 50) {
+        item.quality = 50;
+        return;
+      }
+    }
+    item.quality = newQuality;
   }
 }
