@@ -144,4 +144,96 @@ describe('Gilded Rose', () => {
       });
     });
   });
+
+  describe('Backstage passes', () => {
+    const backstage_pass = "Backstage passes to a TAFKAL80ETC concert";
+
+    it('Given a Backstage pass with a sellIn value >10, when a day passes, its quality should increase', () => {
+      // Given
+      const gildedRose = new GildedRose([new Item(backstage_pass, 50, 0)]);
+
+      // When
+      const items = gildedRose.updateQuality();
+
+      // Then
+      expect(items[0].quality).toBe(1);
+    });
+
+    it('Given a Backstage pass with a sellIn value >10 and quality value of 50, when a day passes, its quality should not change', () => {
+      // Given
+      const gildedRose = new GildedRose([new Item(backstage_pass, 50, 50)]);
+
+      // When
+      const items = gildedRose.updateQuality();
+
+      // Then
+      expect(items[0].quality).toBe(50);
+    });
+
+    it('Given a Backstage pass with a sellIn value of 10, when a day passes, its quality should increase by 2', () => {
+      // Given
+      const gildedRose = new GildedRose([new Item(backstage_pass, 10, 0)]);
+
+      // When
+      const items = gildedRose.updateQuality();
+
+      // Then
+      expect(items[0].quality).toBe(2);
+    });
+
+    it('Given a Backstage pass with a sellIn value of 10 and quality value of 49, when a day passes, its quality should be 50', () => {
+      // Given
+      const gildedRose = new GildedRose([new Item(backstage_pass, 10, 49)]);
+
+      // When
+      const items = gildedRose.updateQuality();
+
+      // Then
+      expect(items[0].quality).toBe(50);
+    });
+
+    it('Given a Backstage pass with a sellIn value of 5, when a day passes, its quality should increase by 3', () => {
+      // Given
+      const gildedRose = new GildedRose([new Item(backstage_pass, 5, 0)]);
+
+      // When
+      const items = gildedRose.updateQuality();
+
+      // Then
+      expect(items[0].quality).toBe(3);
+    });
+
+    it('Given a Backstage pass with a sellIn value of 5 and quality value of 48, when a day passes, its quality should be 50', () => {
+      // Given
+      const gildedRose = new GildedRose([new Item(backstage_pass, 5, 48)]);
+
+      // When
+      const items = gildedRose.updateQuality();
+
+      // Then
+      expect(items[0].quality).toBe(50);
+    });
+
+    it('Given a Backstage pass with a sellIn value of 0, when a day passes, its quality should be 0', () => {
+      // Given
+      const gildedRose = new GildedRose([new Item(backstage_pass, 0, 10)]);
+
+      // When
+      const items = gildedRose.updateQuality();
+
+      // Then
+      expect(items[0].quality).toBe(0);
+    });
+
+    it('Given a Backstage pass with a sellIn value of <0, when a day passes, its quality should be 0', () => {
+      // Given
+      const gildedRose = new GildedRose([new Item(backstage_pass, -1, 10)]);
+
+      // When
+      const items = gildedRose.updateQuality();
+
+      // Then
+      expect(items[0].quality).toBe(0);
+    });
+  });
 });
