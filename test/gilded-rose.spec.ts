@@ -81,4 +81,11 @@ describe('Gilded Rose', () => {
     expect(items[0].quality).toBe(8);
   })
 
+  it('Given Aged Brie is being sold, when SellIn date is negative, quality should increase at double speed',()=>{
+    const gildedRose = new GildedRose([new Item('Aged Brie',-2,10)]);
+    const items=gildedRose.updateQuality();
+
+    expect(items[0].quality).toBe(12);
+  })
+
 });
