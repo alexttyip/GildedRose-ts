@@ -56,10 +56,6 @@ export class GildedRose {
     }
   }
 
-  updateQualityAgedBrie(item:Item) {
-
-  }
-
   updateQualityPasses(item:Item) {
     if (item.sellIn < 11) {
       if (item.quality < 50) {
@@ -71,5 +67,30 @@ export class GildedRose {
         item.quality = item.quality + 1
       }
     }
+  }
+
+  getItemQualityChange(item:Item){
+    if(item.name === "Aged Brie") return this.getAgedBrieQualityChange(item);
+    if(item.name.includes("Backstage passes",0)) return this.getPassesQualityChange(item);
+
+    if(item.quality <= 0) return 0;
+    if(item.sellIn < 0 && item.quality > 1) return -2;
+    return -1;
+  }
+
+  getAgedBrieQualityChange(item:Item){
+    if(item.quality >= 50) return 0;
+    if(item.sellIn < 0 && item.quality < 49) return 2;
+    return 1;
+  }
+
+  getPassesQualityChange(item:Item){
+    if(item.sellIn < 0) return item.quality;
+    if(item.quality >= 50) return 0;
+    if(item.sellIn <= 10) {
+      if(item.sellIn <= 5 && item.quality < 48) return 3;
+      if(item.quality < 49) return 2;
+    }
+    return 1;
   }
 }
