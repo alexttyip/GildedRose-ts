@@ -42,6 +42,9 @@ export class GildedRose {
         if (this.items[i].sellIn < 0) {
           increment *= 2;
         }
+        if (this.items[i].name.indexOf('Conjured') > -1) {
+          increment *= 2;
+        }
         if (increment > 0) {
           this.items[i].quality = Math.min(this.items[i].quality + increment, 50);
         }
