@@ -171,6 +171,19 @@ describe('Gilded Rose', () => {
     })
   })
 
+  describe('Conjured Items', () => {
+    it('Given Conjured and normal items, when updateQuality is called, then quality of Conjured Item decreases twice as much.', () => {
+      // Given
+      const testEnv = new GildedRose([new Item('Conjured Item', 3, 5), new Item('Item', 3, 5)]);
+
+      // When
+      const items = testEnv.updateQuality();
+
+      // Then
+      expect(5 - items[0].quality).toBe(2 * (5 - items[1].quality));
+    })
+  })
+
 
 });
 
