@@ -31,7 +31,6 @@ export class GildedRose {
         } else {
             this.increaseQuality(agedBrie, 2)
         }
-        return agedBrie;
     }
 
     dealWithBackstagePasses(backstagePasses) {
@@ -44,7 +43,6 @@ export class GildedRose {
         } else {
             backstagePasses.quality = 0;
         }
-        return backstagePasses;
     }
 
     dealWithConjuredItem(conjuredItem) {
@@ -53,7 +51,6 @@ export class GildedRose {
         } else if (conjuredItem.sellIn < 0) {
             this.decreaseQuality(conjuredItem, 4)
         }
-        return conjuredItem;
     }
 
     updateQuality() {
@@ -65,17 +62,17 @@ export class GildedRose {
             this.items[i].sellIn -= 1;
 
             if (this.items[i].name == 'Aged Brie') {
-                this.items[i] = this.dealWithAgedBrie(this.items[i])
+                this.dealWithAgedBrie(this.items[i])
                 continue;
             }
 
             if (this.items[i].name == 'Backstage passes to a TAFKAL80ETC concert') {
-                this.items[i] = this.dealWithBackstagePasses(this.items[i])
+                this.dealWithBackstagePasses(this.items[i])
                 continue;
             }
 
             if (this.items[i].name == 'Conjured Mana Cake') {
-                this.items[i] = this.dealWithConjuredItem(this.items[i])
+                this.dealWithConjuredItem(this.items[i])
                 continue;
             }
 
