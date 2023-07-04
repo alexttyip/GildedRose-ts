@@ -249,6 +249,70 @@ describe('Gilded Rose', () => {
   });
 
   describe('Conjured items', ()=>{
+    it('Given a Conjured item with a sellIn time >0, when a day passes, its quality should drop by 2', () => {
+      // Given
+      const gildedRose = new GildedRose([new Item('Conjured test', 1, 20)]);
 
+      // When
+      const items = gildedRose.updateQuality();
+
+      // Then
+      expect(items[0].quality).toBe(18);
+    });
+
+    it('Given a Conjured item with a SellIn time of <0, when a day passes, its quality should drop by 4', () => {
+      // Given
+      const gildedRose = new GildedRose([new Item('Conjured test', -1, 20)]);
+
+      // When
+      const items = gildedRose.updateQuality();
+
+      // Then
+      expect(items[0].quality).toBe(16);
+    });
+
+    it('Given a Conjured item with a SellIn time of 0, when a day passes, its quality should drop by 4', () => {
+      // Given
+      const gildedRose = new GildedRose([new Item('Conjured test', 0, 20)]);
+
+      // When
+      const items = gildedRose.updateQuality();
+
+      // Then
+      expect(items[0].quality).toBe(16);
+    });
+
+    it('Given a Conjured item with a quality value of 0, when a day passes, its quality should remain at 0', () => {
+      // Given
+      const gildedRose = new GildedRose([new Item('Conjured test', 5, 0)]);
+
+      // When
+      const items = gildedRose.updateQuality();
+
+      // Then
+      expect(items[0].quality).toBe(0);
+    });
+
+    it('Given a Conjured item with a quality value of 0 and sellIn value of 0, when a day passes, its quality should remain at 0', () => {
+      // Given
+      const gildedRose = new GildedRose([new Item('Conjured test', 0, 0)]);
+
+      // When
+      const items = gildedRose.updateQuality();
+
+      // Then
+      expect(items[0].quality).toBe(0);
+    });
+
+    it('Given a Conjured item with a quality value <0, when a day passes, its quality not change', () => {
+      // Given
+      const gildedRose = new GildedRose([new Item('Conjured test', 5, -10)]);
+
+      // When
+      const items = gildedRose.updateQuality();
+
+      // Then
+      expect(items[0].quality).toBe(-10);
+    });
   })
 });
