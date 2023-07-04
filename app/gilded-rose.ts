@@ -19,54 +19,14 @@ export class GildedRose {
 
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i].name != 'Aged Brie' && this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-        this.updateQualityGeneral(this.items[i]);
-      } else {
-        if (this.items[i].quality < 50) {
-          this.items[i].quality = this.items[i].quality + 1
-          if (this.items[i].name == 'Backstage passes to a TAFKAL80ETC concert') {
-            this.updateQualityPasses(this.items[i]);
-          }
-        }
-      }
-      if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-        this.items[i].sellIn = this.items[i].sellIn - 1;
-      }
-      if (this.items[i].sellIn < 0) {
-        if (this.items[i].name != 'Aged Brie') {
-          if (this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-            this.updateQualityGeneral(this.items[i]);
-          } else {
-            this.items[i].quality = 0;
-          }
-        } else {
-          if (this.items[i].quality < 50) {
-            this.items[i].quality = this.items[i].quality + 1
-          }
-        }
+      let qualityChange = 0;
+      if(!this.items[i].name.includes("Sulfuras",0)){
+        this.items[i].sellIn -= 1;
+        this.items[i].quality += this.getItemQualityChange(this.items[i]);
       }
     }
 
     return this.items;
-  }
-
-  updateQualityGeneral(item:Item) {
-    if (item.quality > 0 && item.name != 'Sulfuras, Hand of Ragnaros') {
-      item.quality = item.quality - 1;
-    }
-  }
-
-  updateQualityPasses(item:Item) {
-    if (item.sellIn < 11) {
-      if (item.quality < 50) {
-        item.quality = item.quality + 1
-      }
-    }
-    if (item.sellIn < 6) {
-      if (item.quality < 50) {
-        item.quality = item.quality + 1
-      }
-    }
   }
 
   getItemQualityChange(item:Item){
@@ -85,7 +45,7 @@ export class GildedRose {
   }
 
   getPassesQualityChange(item:Item){
-    if(item.sellIn < 0) return item.quality;
+    if(item.sellIn < 0) return -item.quality;
     if(item.quality >= 50) return 0;
     if(item.sellIn <= 10) {
       if(item.sellIn <= 5 && item.quality < 48) return 3;
