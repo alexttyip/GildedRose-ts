@@ -5,7 +5,6 @@
   "scripts": {
     "precompile": "rimraf app/**/*.js test/**/*.js",
     "compile": "tsc",
-    "pretest": "rimraf app/**/*.js test/**/*.js",
     "test": "jest",
     "test:watch": "jest --watchAll"
   },
