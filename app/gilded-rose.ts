@@ -32,12 +32,15 @@ export class GildedRose {
     if(item.name.includes("Backstage passes")) {
       change = this.getPassesQualityChange(item);
     }
-    else if(item.name.includes("Aged Brie")){
+    else if(item.name === "Aged Brie"){
       change = -change;
     }
 
     if(item.name.includes("Conjured")) {
       change = 2*change;
+      if(item.name === "Conjured Aged Brie") {
+        change = -change;
+      }
     }
     return change;
   }
