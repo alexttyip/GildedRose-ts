@@ -43,7 +43,7 @@ describe('Gilded Rose', () => {
     //   For test consistency, access the quality update value by an initial update
     let items = gildedRose.updateQuality();
     const qualityDropRate = 20 - items[0].quality;
-    items = gildedRose.updateQuality();
+    gildedRose.updateQuality();
 
     // When
     items = gildedRose.updateQuality();
