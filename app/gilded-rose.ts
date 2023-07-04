@@ -48,8 +48,8 @@ export class GildedRose {
       // Increase quality for Brie and Concert ticket
       item.quality = GildedRose.increase(item.quality)
 
-      // Concert ticket, more increases
       if (item.name === 'Backstage passes to a TAFKAL80ETC concert') {
+        // Concert ticket, more increases
         if (item.sellIn < 11) {
           item.quality = GildedRose.increase(item.quality)
         }
