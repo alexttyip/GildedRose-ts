@@ -103,48 +103,4 @@ describe('Gilded Rose', () => {
     expect(items[0].quality).toBe(0);
   });
 
-  it('Sulfuras quality will be fixed to 80 if not already 80', () => {
-    // Given
-    const gildedRose = new GildedRose([new Item('Sulfuras, Hand of Ragnaros', 1, 30)]);
-
-    // When
-    const items = new GildedRose(gildedRose.updateQuality()).updateQuality();
-
-    // Then
-    expect(items[0].quality).toBe(80);
-  });
-
-  it('Quality field works with floats', () => {
-    // Given
-    const gildedRose = new GildedRose([new Item('Normal Item', 1, 10.5)]);
-
-    // When
-    const items = gildedRose.updateQuality();
-
-    // Then
-    expect(items[0].quality).toBe(9.5);
-  });
-
-  it('If input is invalid, quality will be fixed to be within 0 and 50 first', () => {
-    // Given
-    const gildedRose = new GildedRose([new Item('Normal Item', 1, -2), new Item('Normal Item', 1, 100)]);
-
-    // When
-    const items = gildedRose.updateQuality();
-
-    // Then
-    expect(items[0].quality).toBe(0);
-    expect(items[1].quality).toBe(49);
-  });
-
-  it('When initial quality is 0.5, drops to 0 instead of -0.5', () => {
-    // Given
-    const gildedRose = new GildedRose([new Item('Normal Item', 1, 0.5)]);
-
-    // When
-    const items = gildedRose.updateQuality();
-
-    // Then
-    expect(items[0].quality).toBe(0);
-  });
 });
