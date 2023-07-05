@@ -21,14 +21,14 @@ export class GildedRose {
     for (let i = 0; i < this.items.length; i++) {
       if(!this.items[i].name.includes("Sulfuras",0)){
         this.items[i].sellIn -= 1;
-        this.applyQualityChange(this.items[i], this.getItemQualityChange(this.items[i]));
+        this.applyQualityChange(this.items[i], this.getQualityChange(this.items[i]));
       }
     }
     return this.items;
   }
 
-  getItemQualityChange(item:Item){
-    let change = this.getQualityChange(item);
+  getQualityChange(item:Item){
+    let change = this.getDefaultQualityChange(item);
     if(item.name.includes("Backstage passes")) {
       change = this.getPassesQualityChange(item);
     }
@@ -45,7 +45,7 @@ export class GildedRose {
     return change;
   }
 
-  getQualityChange(item:Item){
+  getDefaultQualityChange(item:Item){
     if(item.sellIn < 0) {
       return -2;
     }
