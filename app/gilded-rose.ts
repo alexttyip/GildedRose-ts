@@ -21,6 +21,26 @@ export class GildedRose {
 
   // Can Change this
 
+  updateBrie(item) {
+    return 1;
+  }
+
+  updateSulfuras() {
+    return 0;
+  }
+
+  updateBackstagePass(item) {
+    if (item.sellIn > 10) {
+      return 1;
+    } else if (item.sellIn <= 10 && item.sellIn > 5) {
+      return 2;
+    } else if (item.sellIn <= 5 && item.sellIn >= 0) {
+      return 3;
+    } else {
+      return -1*item.quality;
+    }
+  }
+
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
       // All items reduce by one sell by date apart from Sulfuras
@@ -29,37 +49,15 @@ export class GildedRose {
       }
 
       let qualityChange = 0;
-      if (this.items[i].name == 'Aged Brie' || this.items[i].name.toLowerCase().includes('backstage passes'))  {
-        // Quality Increases
-        qualityChange = 1
 
-        if (this.items[i].name.toLowerCase().includes('backstage passes')) {
-          // Backstage Pass Quality depends on age
-          if (this.items[i].sellIn <= 10) {
-            qualityChange += 1;
-          }
-
-          if (this.items[i].sellIn <= 5) {
-            qualityChange += 1;
-          }
-
-          if (this.items[i].sellIn < 0) {
-            qualityChange = -1 * this.items[i].quality;
-          }
-        }
-
-        // Caps at 50
-        if (this.items[i].quality + qualityChange > 50) {
-          qualityChange = 50 - this.items[i].quality;
-        }
-
-      } else if (this.items[i].name.toLowerCase().indexOf('sulfuras') === -1) {
-        // Quality Decreases
-        qualityChange = -1;
-
+      if (this.items[i].name == 'Aged Brie') {
+        qualityChange = this.updateBrie(this.items[i]);
+      } else if (this.items[i].name.toLowerCase().includes('backstage passes')) {
+        qualityChange = this.updateBackstagePass(this.items[i])
+      } else if (this.items[i].name.toLowerCase().includes('sulfuras')) {
+        qualityChange = this.updateSulfuras();
       } else {
-        // Sulfuras quality remains constant
-        qualityChange = 0;
+        qualityChange = -1;
       }
 
       if (this.items[i].sellIn < 0) {
@@ -73,6 +71,10 @@ export class GildedRose {
       }
 
       this.items[i].quality += qualityChange;
+      if (this.items[i].quality > 50 && this.items[i].name.toLowerCase().indexOf('sulfuras') === -1) {
+
+        this.items[i].quality = 50;
+      }
       if (this.items[i].quality < 0) {
         // Caps Quality at 0
         this.items[i].quality = 0;
