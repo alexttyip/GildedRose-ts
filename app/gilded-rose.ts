@@ -15,8 +15,15 @@ export class GildedRose {
   maxQuality = 50;
   minQuality = 0;
 
+  qualityDecayRate = -1;
+  passIncreaseRates = [{day:10,rate:2},{day:5,rate:3}];
+  conjuredDecayMultiplier = 2;
+
   constructor(items = [] as Array<Item>) {
     this.items = items;
+    this.passIncreaseRates.sort((a, b) => {
+      return a.day - b.day;
+    })
   }
 
   updateQuality() {
@@ -30,7 +37,7 @@ export class GildedRose {
   }
 
   getQualityChange(item:Item){
-    let change = 0
+    let change;
     if(item.name.includes("Backstage passes")) {
       change =  this.getPassesQualityChange(item);
     }else{
@@ -38,7 +45,7 @@ export class GildedRose {
     }
 
     if(item.name.includes("Conjured")) {
-      change = 2*change;
+      change = this.conjuredDecayMultiplier*change;
     }
     if(item.name === "Aged Brie" || item.name == "Conjured Aged Brie") {
       change = -change;
@@ -48,18 +55,21 @@ export class GildedRose {
 
   getDefaultQualityChange(item:Item){
     if(item.sellIn < 0) {
-      return -2;
+      return 2*this.qualityDecayRate;
     }
-    return -1;
+    return this.qualityDecayRate;
   }
 
   getPassesQualityChange(item:Item){
-    if(item.sellIn < 0) return -item.quality;
-    if(item.sellIn <= 5) {
-      return 3;
+    if(item.sellIn < 0) {
+      return -item.quality;
     }
-    if(item.sellIn <= 10) {
-      return 2;
+
+    // This may be slightly unreadable, I'd appreciate some input
+    for(const rateObj of this.passIncreaseRates) {
+      if(item.sellIn <= rateObj.day) {
+        return rateObj.rate;
+      }
     }
     return 1;
   }
