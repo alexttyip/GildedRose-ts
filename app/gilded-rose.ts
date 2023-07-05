@@ -28,19 +28,18 @@ export class GildedRose {
   }
 
   getQualityChange(item:Item){
-    let change = this.getDefaultQualityChange(item);
+    let change = 0
     if(item.name.includes("Backstage passes")) {
-      change = this.getPassesQualityChange(item);
-    }
-    else if(item.name === "Aged Brie"){
-      change = -change;
+      change =  this.getPassesQualityChange(item);
+    }else{
+      change = this.getDefaultQualityChange(item);
     }
 
     if(item.name.includes("Conjured")) {
       change = 2*change;
-      if(item.name === "Conjured Aged Brie") {
-        change = -change;
-      }
+    }
+    if(item.name === "Aged Brie" || item.name == "Conjured Aged Brie") {
+      change = -change;
     }
     return change;
   }
