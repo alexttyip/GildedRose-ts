@@ -64,25 +64,16 @@ export class GildedRose {
   }
 
   applyQualityChange(item:Item, change:number) {
+    if(change === 0) return;
+    if  (change === 0 ||
+        (change < 0 && item.quality <= 0) ||
+        (change > 0 && item.quality >= 50)){
+      return;
+    }
+
     let newQuality = item.quality + change;
-    if(change < 0){
-      if(item.quality <= 0){
-        return;
-      }
-      if(newQuality <= 0) {
-        item.quality = 0;
-        return;
-      }
-    }
-    else if(change > 0){
-      if(item.quality >= 50){
-        return;
-      }
-      if(newQuality >= 50) {
-        item.quality = 50;
-        return;
-      }
-    }
+    newQuality = Math.max(0, newQuality);
+    newQuality = Math.min(50, newQuality);
     item.quality = newQuality;
   }
 }
