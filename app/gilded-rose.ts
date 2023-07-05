@@ -12,6 +12,8 @@ export class Item {
 
 export class GildedRose {
   items: Array<Item>;
+  maxQuality = 50;
+  minQuality = 0;
 
   constructor(items = [] as Array<Item>) {
     this.items = items;
@@ -65,14 +67,14 @@ export class GildedRose {
   applyQualityChange(item:Item, change:number) {
     if(change === 0) return;
     if  (change === 0 ||
-        (change < 0 && item.quality <= 0) ||
-        (change > 0 && item.quality >= 50)){
+        (change < 0 && item.quality <= this.minQuality) ||
+        (change > 0 && item.quality >= this.maxQuality)){
       return;
     }
 
     let newQuality = item.quality + change;
-    newQuality = Math.max(0, newQuality);
-    newQuality = Math.min(50, newQuality);
+    newQuality = Math.max(this.minQuality, newQuality);
+    newQuality = Math.min(this.maxQuality, newQuality);
     item.quality = newQuality;
   }
 }
